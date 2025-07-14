@@ -71,7 +71,7 @@ job_urls = [
 keywords = ["DevOps", "SRE", "Cloud", "AWS", "Azure"]
 
 sender_email = "your.email@gmail.com"
-receiver_email = "maharshipathak4@gmail.com"
+receiver_email = " Email address"
 app_password = "your_16_char_gmail_app_password"
 ```
 
