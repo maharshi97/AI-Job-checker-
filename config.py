@@ -13,5 +13,5 @@ keywords = [
 ]
 
 sender_email = "your.email@gmail.com"
-receiver_email = "maharshipathak4@gmail.com"
+receiver_email = "email here"
 app_password = "your_app_password_here"
