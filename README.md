@@ -1,14 +1,6 @@
-# AI-Job-checker-
+# 🧠 Remote Job Checker Agent (AI + Playwright + AWS)
 
-
-Here’s a professional `README.md` file for your **Remote Job Checker Agent** project, ready to drop into the root folder:
-
----
-
-````markdown
-# 🧠 Remote Job Checker Agent (AI + Playwright)
-
-Automatically checks multiple remote job boards and emails you matching job posts (e.g., DevOps, SRE, Cloud Engineer) using AI (GPT-4o), Playwright, and Gmail SMTP.
+Automatically checks multiple remote job boards and emails you matching job posts (e.g., DevOps, SRE, Cloud Engineer) using AI (GPT-4o), Playwright, and AWS Lambda.
 
 ---
 
@@ -17,8 +9,10 @@ Automatically checks multiple remote job boards and emails you matching job post
 - ✅ Opens real job board URLs using **Playwright**
 - 🧠 Extracts relevant job postings using **OpenAI GPT-4o**
 - 📬 Sends daily email alerts with matches
-- 💻 Easily configurable with your own keywords, boards, and email
-- 🔄 Automate using **Task Scheduler** (Windows) or crontab
+- ☁️ Fully serverless deployment using **AWS Lambda**
+- 🔄 Automated daily runs via **CloudWatch Events**
+- 🔐 Secrets stored in **AWS Secrets Manager**
+- 📦 CI/CD deployment via **GitHub Actions**
 
 ---
 
@@ -27,19 +21,19 @@ Automatically checks multiple remote job boards and emails you matching job post
 - Python 3.9+
 - OpenAI API key
 - Gmail account with **App Password**
+- AWS CLI + IAM credentials
 - Installed browsers via Playwright
 
 ---
 
-## 🔧 Setup
+## 🔧 Setup (Local)
 
 ### 1. Clone or Download the Project
 
 ```bash
 git clone https://github.com/yourusername/remote-job-checker-agent.git
 cd remote-job-checker-agent
-````
-
+```
 —or download the ZIP and extract.
 
 ### 2. Create and Activate Virtual Environment
@@ -71,12 +65,12 @@ job_urls = [
 keywords = ["DevOps", "SRE", "Cloud", "AWS", "Azure"]
 
 sender_email = "your.email@gmail.com"
-receiver_email = " Email address"
+receiver_email = "maharshipathak4@gmail.com"
 app_password = "your_16_char_gmail_app_password"
 ```
 
-> 📌 Your Gmail must have 2FA enabled.
-> Generate App Password from: [https://myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+> 📌 Your Gmail must have 2FA enabled.  
+> Generate App Password from: https://myaccount.google.com/apppasswords
 
 ---
 
@@ -96,7 +90,7 @@ os.environ["OPENAI_API_KEY"] = "sk-..."
 
 ---
 
-## ▶️ Run the Script
+## ▶️ Run the Script Locally
 
 ```bash
 python main.py
@@ -104,19 +98,46 @@ python main.py
 
 ---
 
-## 💡 Automate It (Optional)
+## ☁️ AWS Deployment
 
-### Windows Task Scheduler
+### 1. Package for Lambda
 
-* Create a Basic Task
-* Trigger: Daily
-* Action: Start a Program
-* Program/script: `python`
-* Add arguments: `C:\Path\To\remote-job-checker-agent\main.py`
+Use `zip` or GitHub Actions to bundle the code and dependencies.
+
+### 2. Upload to S3
+
+```bash
+aws s3 cp remote-job-checker-agent.zip s3://your-bucket-name/
+```
+
+### 3. Deploy to Lambda
+
+```bash
+aws lambda update-function-code \
+  --function-name jobCheckerAgent \
+  --s3-bucket your-bucket-name \
+  --s3-key remote-job-checker-agent.zip
+```
+
+### 4. Schedule Execution
+
+- Use **CloudWatch Events** to run Lambda daily
+
+### 5. Store Secrets Securely
+
+- Use **AWS Secrets Manager** to store API keys and credentials
 
 ---
 
-## 📬 Output
+## 🔁 GitHub Actions CI/CD
+
+- Runs on push to `main`
+- Installs deps, zips code, uploads to S3
+- Updates Lambda via AWS CLI
+
+---
+
+## 📬 Email Output
 
 When matches are found, you’ll get an email like:
 
@@ -153,18 +174,15 @@ remote-job-checker-agent/
 
 ---
 
-## 🧱 Future Ideas
+## 📌 Outcome
 
-* Add Slack or Telegram alerts
-* Save results in Google Sheets
-* Dashboard with Flask/Streamlit
-* Daily scheduler in Replit or PythonAnywhere
+Enabled fully automated daily job search across 100+ remote boards with AI extraction and cloud-native infrastructure. Saved hours of manual effort.
 
 ---
 
 ## 🧑‍💻 Built By
 
-Maharshi Pathak
+Maharshi Pathak  
 🔗 [LinkedIn](https://www.linkedin.com/in/mpathak7)
 
 ---
@@ -172,15 +190,3 @@ Maharshi Pathak
 ## 🛡️ License
 
 MIT — use freely, modify, and share.
-
-```
-
----
-
-Let me know if you'd like:
-- A version pushed to GitHub
-- Slack or Telegram notification support
-- A button to deploy on Replit or PythonAnywhere
-
-Happy automating, Maharshi!
-```
