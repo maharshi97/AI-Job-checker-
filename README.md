@@ -1,4 +1,3 @@
-HEAD
 # Remote Job Checker Agent
 
 This is a Python-based agent that uses OpenAI, Playwright, and email to notify you about relevant remote job postings.
